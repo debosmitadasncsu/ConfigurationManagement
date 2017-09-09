@@ -4,7 +4,7 @@
 ## Unity ID: ddas5
 
 ## Code Files:
-* [Vagrantfile](https://github.ncsu.edu/ddas5/HW1/blob/master/Vagrantfilehttps://github.ncsu.edu/ddas5/HW1/blob/master/Vagrantfile)
+* [Vagrantfile](https://github.ncsu.edu/ddas5/HW1/blob/master/Vagrantfile)
 
  ![alt text](https://github.ncsu.edu/ddas5/HW0/blob/master/Slack.png)
 * [Moodle](https://wolfware.ncsu.edu/profile/)
