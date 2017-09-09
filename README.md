@@ -9,6 +9,8 @@
 * [inventory](https://github.ncsu.edu/ddas5/HW1/blob/master/inventory) - Username and password are specified here along with python version to be used by ansible
 * [loops.yml](https://github.ncsu.edu/ddas5/HW1/blob/master/loops.yml) - YAML file which will be used by ansible playbook.
 
+## Screencast Link:
+* [Click here to view the screencast of demo](https://www.youtube.com/watch?v=zyowyK9F3zg&feature=youtu.be)
  ![alt text](https://github.ncsu.edu/ddas5/HW0/blob/master/Slack.png)
 * [Moodle](https://wolfware.ncsu.edu/profile/)
 
