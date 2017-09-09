@@ -1,0 +1,119 @@
+---
+- hosts: nodes
+  remote_user: ddas
+
+  vars:
+   vbox:
+     - build-essential
+     - dkms
+     - unzip
+     - wget
+
+   phpvbox:
+     - apache2
+     - php
+     - php-mysql
+     - libapache2-mod-php
+     - php-soap
+     - php-xml
+
+  tasks:
+   - name: Install necessary packages on Ubuntu server
+     apt: pkg={{vbox}} state=present update_cache=yes
+     become: yes
+
+   - name: Install Oracle VirtualBox on Ubuntu 16.04 LTS server
+     apt: pkg=virtualbox state=present 
+     become: yes
+
+   - name: Adding user to VirtualBox group
+     user:
+       name: ddas
+       group: vboxusers
+     become: yes
+
+   - name: Install supporting packages for phpVirtualBox
+     apt: pkg={{phpvbox}} state=present update_cache=yes
+     become: yes
+
+   - name: Install phpVirtualBox in Ubuntu 16.04 LTS
+     get_url:
+       url: https://sourceforge.net/projects/phpvirtualbox/files/phpvirtualbox-5.0-5.zip
+       dest: /home/ubuntu/phpvirtualbox-5.0-5.zip
+       remote_src: True
+
+   - name: Unzipping phpvirtualbox files to /var/www/html    
+     unarchive:
+       src: /home/ubuntu/phpvirtualbox-5.0-5.zip
+       dest: /var/www/html/
+       remote_src: True
+     become: yes
+
+   - name: Assign proper permissions to the phpVirtualBox folder.
+
+     file: 
+       path: /var/www/html/
+       mode: u=rwX,g=rX,o=rX
+
+   - name: Copying files
+     become: yes
+     copy:
+       src: /var/www/html/phpvirtualbox-5.0-5/config.php-example
+       dest: /var/www/html/phpvirtualbox-5.0-5/config.php
+       remote_src: True
+
+   - name: Changing host for phpVirtualBox
+     replace: 
+       path: /var/www/html/phpvirtualbox-5.0-5/config.php
+       regexp: "127.0.0.1"
+       replace: "localhost"
+     become: yes
+
+   - name: adding line to the end of file
+     lineinfile: 
+       path: /etc/default/virtualbox 
+       line: 'VBOXWEB_USER=ddas'
+       remote_src: yes
+     become: yes
+
+   - name: Changing Username and password for phpVirtualBox
+     replace: 
+       path: /var/www/html/phpvirtualbox-5.0-5/config.php
+       regexp: 'vbox' 
+       replace: 'ubuntu'
+     become: yes
+
+   - replace:
+       path: /var/www/html/phpvirtualbox-5.0-5/config.php
+       regexp: "\'pass\'"
+       replace: "'ubuntu'"
+     become: yes
+
+   - name: Restarting 3 required services
+     service:
+       name: vboxweb
+       state: restarted
+     become: yes
+
+   - service:
+       name: vboxdrv
+       state: restarted
+     become: yes
+
+   - service:
+       name: apache2
+       state: restarted
+     become: yes       
+
+   - name: install Vagrant
+     apt: pkg=vagrant state=present 
+     become: yes
+
+   - name: vagrant init
+     command: vagrant init hashicorp/precise32
+
+   - name: vagrant up
+     command: vagrant up
+
+   - name: vagrant ssh
+     command: vagrant ssh
