@@ -1,31 +1,14 @@
-# HW1
+# Configuration-Management
 
-## Name: Debosmita Das     
-## Unity ID: ddas5
+Automatically configuring a computational resource will be one of the most important skills for you to master in your career. You have gained experience using ansible to automatically setup tasks on a virtual machine.
 
-## Code Files:
-* [Vagrantfile](https://github.ncsu.edu/ddas5/HW1/blob/master/Vagrantfile) 
-     - File created after initializing vagrant init
-     - Changes made in the file:
-          - The desired IP address of Ubuntu Virtual Machine is given
-          - Enabled to execute the shell script configure.sh to install python2.7 on Ubuntu server.
+Creating your own mini VCL.
 
-* [configure.sh](https://github.ncsu.edu/ddas5/HW1/blob/master/configure.sh) 
-     - To install python2.7 on Ubuntu16.04
-          - This installation of Python is required as we need Python2.7 to execute Ansible, but Ubuntu16.04 Virtual Box comes with Python3 by default.
-     
-* [inventory](https://github.ncsu.edu/ddas5/HW1/blob/master/inventory) 
-     - Username and password are specified here along with python version to be used by ansible
+In this following tasks has been completed:
 
-* [loops.yml](https://github.ncsu.edu/ddas5/HW1/blob/master/loops.yml) 
-     - YAML file which will be used by ansible playbook.
-     - Code to execute this file: 
-          brew install ansible
-          ansible-playbook -i inventory loops.yml -s
-     - The above file should be executed on the localhost.
+Using ansible, be able to automatically configure a headless ubuntu 16.04 server running VirtualBox, with phpVirtualBox, and vagrant. 
+This project has been implemented taking in account the following constraints:
 
-* Please note:all these files should be in the same directory.
-
-## Screencast Link:
-* [Click here to view the screencast of demo](https://www.youtube.com/watch?v=zyowyK9F3zg&feature=youtu.be)
-
+- Used best practices (use modules to do work, avoid shell/commands, be idempotent, use roles when sensible)
+- Everything is setup automatically.
+- No use of ansible galaxy roles.
